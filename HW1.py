@@ -68,7 +68,6 @@ elif number1 < number2:
     print(usl + f' число больше. Вот оно: {number2}')
 else:
     print('Числа равны')"""
-
 first_is_more = number1 > number2
 print(f"Результат сравнения: {number1} > {number2} — это {first_is_more}")
 
@@ -105,5 +104,5 @@ task("Расчёт скидки")
 Необходимо вычислить и вывести итоговую стоимость товара со скидкой."""
 smotrya_kakoy_price = float(input("Старая цена: "))
 skidon = float(input("Скидон в %: "))
-print(f'Цена по скидону: {smotrya_kakoy_price * (1 - skidon) / 100}')
+print(f'Цена по скидону: {smotrya_kakoy_price * (1 - skidon / 100)}')
 print('\nСпасибо за внимание!:)')
