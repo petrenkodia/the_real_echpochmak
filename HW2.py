@@ -442,6 +442,20 @@ print("Пароль принят!" if not errors else "Ошибки: " + ", ".jo
 # print("Пароль принят!" if len(p)>=8 and any(c.isupper() for c in p) and any(c.islower() for c in p) and any(c.isdigit() for c in p) else "Пароль слабый")
 
 task("Угадай слово по буквам") # Загаданное слово скрыто (например, python → ______). Пользователь вводит буквы, пока не угадает всё.
+slovo = "эчпочмак"  
+result = ["_"] * len(slovo)  # Список из подчеркиваний
+attempts = 0  
+print(f"В слове {len(slovo)} букв: ", " ".join(result)) 
+while "_" in result: 
+    guess = input("Введите букву: ").lower()  
+    if guess in slovo:  # Если буква есть в загаданном слове
+        for i in range(len(slovo)):
+            if slovo[i] == guess:
+                result[i] = guess  # Присваиваем
+        print("Верно! ", " ".join(result))
+    else:
+        print("Такой буквы нет. Попробуйте еще раз!")
+print(f"Поздравляем! Вы угадали слово '{slovo}'")
 
 task("Генерация новой строки без пробелов и гласных") # Введите строку, используя for и if, удалите пробелы и гласные.
 
