@@ -10,18 +10,20 @@ from datetime import datetime
 # Возвращает словарь со всеми переданными данными
 # Добавьте к результату поле created_at с текущей датой
 
-def create_profile(name: str, age: int, email: str = None, city: str = "Москва"):
-    if age <= 0 or age >= 150: # Проверяем с выводом ошибки
-        raise ValueError("Возраст должен быть положительным и меньше 150")
+def create_profile(name: str, age: int, email: str | None = None, city: str = "Москва"):
+    if 0 < age < 150:
     profile = {
         "name": name,
         "age": age,
-        "email": email if email and "@" in email else None, # Не примет email без "@"
+        "email": email if email and "@" in email else "Не указан",  # Не примет email без "@"
         "city": city,
         "created_at": datetime.now().strftime("%d.%m.%Y")
     }
+    else:
+        raise ValueError("Возраст должен быть положительным и меньше 150")
     return profile
 
+print(create_profile("Ди", 28))
 print(create_profile("Ди", 28, "petrenkodia@ya.ru"))
 
 # Функция calculate_discount
@@ -35,13 +37,12 @@ print(create_profile("Ди", 28, "petrenkodia@ya.ru"))
 
 def calculate_discount(price: float, *, discount_percent: int = 10, membership: str = "обычный"):
 # Все аргументы после "*" должны передаваться по имени (т.е. discount_percent = 15, а не просто 15)
+    extra = 0
     if membership == "премиум":
         extra = 5
     elif membership == "vip":
         extra = 10
-    else:
-        extra = 0
-# extra = 5 if membership == "премиум" else 10 if membership == "vip" else 0
+# или: extra = 5 if membership == "премиум" else 10 if membership == "vip" else 0
     total_discount = discount_percent + extra
     final_price = price * (100 - total_discount) / 100
     return {
