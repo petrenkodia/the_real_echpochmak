@@ -1,3 +1,5 @@
+import datetime
+
 # Функция process_data
 """Первый аргумент data - список данных для обработки
 Принимает произвольное количество операций через *operations
@@ -47,6 +49,31 @@ print(process_data(data, "reverse")) # просто разворот
 Если format="html": оборачивает разделы в HTML теги
 Добавляет в отчет дату создания и все переданные метаданные"""
 
+def create_report(title, *sections, author="Система", format="text", **metadata):
+    report = f"\nЗаголовок: {title}\nАвтор: {author}\nФормат: {format}\n"
+
+    for i, section in enumerate(sections, 1):
+        report += f"РАЗДЕЛ {i}: {section}\n"
+    if metadata:
+        report += " - МЕТАДАННЫЕ - \n"
+        for key, value in metadata.items():
+            report += f"{key}: {value}\n"
+    report += f"Дата: {datetime.datetime.now().strftime("%d-%m-%Y")}"
+    if format == "html":
+        report = f"<html><body><h1>{title}</h1><pre>{report}</pre></body></html>" # pre - значит с сохранением формата
+
+    return report
+
+report = create_report(
+    "Котики",
+    "Трехцветные", "Лысенькие", "Мурчащие",
+    author="Диана",
+    format="html",
+    cats="love", mur="murmur"
+)
+print(f"\n--- Задание 2 ---")
+print(report)
+
 # Функция send_notification
 """Обязательные аргументы: recipient (получатель) и message (текст)
 Произвольное количество дополнительных получателей через *cc_recipients
@@ -54,3 +81,31 @@ print(process_data(data, "reverse")) # просто разворот
 Именованный параметр delivery_method (по умолчанию "email")
 Дополнительные опции через **options (subject, retry_count, etc.)
 Возвращает словарь с информацией об отправке, включая количество получателей и статус"""
+
+
+def send_notification(recipient, message, *cc_recipients, urgent: str | bool = False, delivery_method="email", **options):
+    all_recipients = [recipient] + list(cc_recipients)
+
+    return {
+        "Получатели": all_recipients,
+        "Всего": len(all_recipients),
+        "Сообщение": message,
+        "Срочность": urgent if urgent else "normal",  # Исправлено здесь
+        "Метод": delivery_method,
+        **options
+    }
+
+pukpuk = send_notification(
+    "Диана",
+    '"В четверг 03.07 идем в бар!"',
+    "Руслан",
+    "Соня КряГок",
+    urgent="Супер-важно",
+    delivery_method="Телеграмм",
+    tema="Бар",
+    sloznost_otkaza=19
+)
+
+print(f"\n--- Задание 3 ---")
+for key, value in pukpuk.items():
+    print(f"{key}: {value}")
