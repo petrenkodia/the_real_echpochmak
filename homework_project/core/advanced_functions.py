@@ -85,13 +85,14 @@ print(report)
 
 def send_notification(recipient, message, *cc_recipients, urgent: str | bool = False, delivery_method="email", **options):
     all_recipients = [recipient] + list(cc_recipients)
-
+    status = "OK"
     return {
         "Получатели": all_recipients,
         "Всего": len(all_recipients),
         "Сообщение": message,
-        "Срочность": urgent if urgent else "normal",  # Исправлено здесь
+        "Срочность": urgent if urgent else "normal",  
         "Метод": delivery_method,
+        "Статус": status,
         **options
     }
 
