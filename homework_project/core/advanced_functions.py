@@ -60,7 +60,7 @@ def create_report(title, *sections, author="Система", format="text", **me
             report += f"{key}: {value}\n"
     report += f"Дата: {datetime.datetime.now().strftime("%d-%m-%Y")}"
     if format == "html":
-        report = f"<html><body><h1>{title}</h1><pre>{report}</pre></body></html>" # pre - значит с сохранением формата
+        report = f"<html><body><h1>{title}</h1><pre>{report.split('\n', 1)[1]}</pre></body></html>" # pre - значит с сохранением формата
 
     return report
 
