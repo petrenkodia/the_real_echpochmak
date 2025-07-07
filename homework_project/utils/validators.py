@@ -76,13 +76,13 @@ def validate_data(data, *validators, **validation_options):
 
 # Делаем парочку простых валидаторов
 
-def validate_name(data, **kwargs):  # Исправлено *kwargs на **kwargs
-    value = data.get('name')  # Добавлены кавычки вокруг name
+def validate_name(data, **kwargs): 
+    value = data.get('name')  
     if not value:
         return False, "Поле 'name' не должно быть пустым"
     return True, ""
 
-def validate_age(data, min_age=18, **kwargs):  # Исправлено *kwargs на **kwargs
+def validate_age(data, min_age=18, **kwargs):  
     if data.get('age') is None:
         return False, "Поле 'age' отсутствует"
     if data['age'] >= min_age:
